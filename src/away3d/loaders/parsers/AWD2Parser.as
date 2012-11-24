@@ -384,9 +384,11 @@ package away3d.loaders.parsers
 			
 			if (type == 1) { // Color material
 				var color : uint;
-				
-				color = props.get(1, 0xcccccc);
-				mat = new ColorMaterial(color, props.get(10, 1.0));
+				var alpha : Number;
+				color = (props.get(1, 0xccccccff) >> 8) & 0xffffff;
+				alpha = Number(props.get(1, 0xccccccff) & 0xff) / 255.0;
+				mat = new ColorMaterial(color, alpha);
+				finalize = true;
 			}
 			else if (type == 2) { // Bitmap material
 				//TODO: not used
